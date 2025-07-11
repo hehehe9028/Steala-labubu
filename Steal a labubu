@@ -1,0 +1,471 @@
+-- Services
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "KeySystem"
+gui.ResetOnSpawn = false
+
+-- Main Frame
+local popup = Instance.new("Frame")
+popup.Size = UDim2.new(0, 320, 0, 250)
+popup.Position = UDim2.new(0.5, 0, 0.5, 0)
+popup.AnchorPoint = Vector2.new(0.5, 0.5)
+popup.BackgroundColor3 = Color3.new(1, 1, 1)
+popup.BorderSizePixel = 0
+popup.Parent = gui
+Instance.new("UICorner", popup).CornerRadius = UDim.new(0, 10)
+
+-- Title
+local title = Instance.new("TextLabel", popup)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Position = UDim2.new(0, 0, 0, 5)
+title.BackgroundTransparency = 1
+title.Text = "Key System - Made by Crazy"
+title.TextColor3 = Color3.new(0, 0, 0)
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+
+-- Hint
+local hint = Instance.new("TextLabel", popup)
+hint.Size = UDim2.new(1, -20, 0, 30)
+hint.Position = UDim2.new(0, 10, 0, 45)
+hint.BackgroundTransparency = 1
+hint.Text = "Enter your key or get it from Discord:"
+hint.TextColor3 = Color3.new(0, 0, 0)
+hint.Font = Enum.Font.Gotham
+hint.TextScaled = true
+
+-- Key Input
+local input = Instance.new("TextBox", popup)
+input.Size = UDim2.new(0.8, 0, 0, 40)
+input.Position = UDim2.new(0.1, 0, 0, 85)
+input.PlaceholderText = "Enter Key Here"
+input.Text = ""
+input.Font = Enum.Font.Gotham
+input.TextScaled = true
+input.TextColor3 = Color3.new(0, 0, 0)
+input.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+Instance.new("UICorner", input).CornerRadius = UDim.new(0, 6)
+
+-- Submit Button
+local submit = Instance.new("TextButton", popup)
+submit.Size = UDim2.new(0.6, 0, 0, 40)
+submit.Position = UDim2.new(0.2, 0, 0, 135)
+submit.Text = "Submit"
+submit.Font = Enum.Font.GothamBold
+submit.TextScaled = true
+submit.TextColor3 = Color3.new(1, 1, 1)
+submit.BackgroundColor3 = Color3.new(0, 0, 0)
+Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 6)
+
+-- Get Key Button
+local getKey = Instance.new("TextButton", popup)
+getKey.Size = UDim2.new(0.6, 0, 0, 35)
+getKey.Position = UDim2.new(0.2, 0, 0, 185)
+getKey.Text = "Get Key"
+getKey.Font = Enum.Font.GothamBold
+getKey.TextScaled = true
+getKey.TextColor3 = Color3.new(1, 1, 1)
+getKey.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 6)
+
+-- Clipboard copy (Get Key button)
+local success, Clipboard = pcall(function()
+	return setclipboard
+end)
+
+getKey.MouseButton1Click:Connect(function()
+	if success and Clipboard then
+		setclipboard("https://discord.gg/kjEn8eHP")
+		getKey.Text = "Copied!"
+		wait(2)
+		getKey.Text = "Get Key"
+	else
+		getKey.Text = "Not Supported"
+		wait(2)
+		getKey.Text = "Get Key"
+	end
+end)
+
+-- Key check
+submit.MouseButton1Click:Connect(function()
+	local key = input.Text
+	if key == "crazy" then
+		-- Success: Update GUI instead of hiding
+		title.Text = "✅ Thanks for joining the Discord!"
+		hint.Text = "Loading script, please wait..."
+		input.Visible = false
+		submit.Visible = false
+		getKey.Visible = false
+
+		wait(5)
+		gui:Destroy()
+		local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Remove old GUIs
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+for _, guiName in ipairs({"HOKALAZA_UI", "HOKALAZA_ADK_UI", "StealBrainrotModdedUI", "MyTeleportGui", "AutoLock", "NoclipToggle"}) do
+    local oldGui = playerGui:FindFirstChild(guiName)
+    if oldGui then oldGui:Destroy() end
+end
+
+local TweenService = game:GetService("TweenService")
+
+-- NEW MODERNIZED ADK UI (rounded, glassy look, slightly larger)
+local gui = Instance.new("ScreenGui")
+gui.Name = "HOKALAZA_ADK_UI"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+-- Glassy sidebar
+local sidebar = Instance.new("Frame")
+sidebar.Name = "Sidebar"
+sidebar.Size = UDim2.new(0, 160, 0, 430)
+sidebar.Position = UDim2.new(0.5, -340, 0.5, -215)
+sidebar.BackgroundColor3 = Color3.fromRGB(36, 32, 44)
+sidebar.BorderSizePixel = 0
+sidebar.BackgroundTransparency = 0.18
+sidebar.Parent = gui
+Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 18)
+local sideStroke = Instance.new("UIStroke", sidebar)
+sideStroke.Thickness = 3
+sideStroke.Color = Color3.fromRGB(220, 120, 255)
+
+-- Sidebar Title
+local sideTitle = Instance.new("TextLabel", sidebar)
+sideTitle.Name = "SideTitle"
+sideTitle.Size = UDim2.new(1, 0, 0, 60)
+sideTitle.Position = UDim2.new(0, 0, 0, 0)
+sideTitle.BackgroundTransparency = 1
+sideTitle.Font = Enum.Font.GothamBlack
+sideTitle.Text = "HOKALAZA LABUBU"
+sideTitle.TextSize = 28
+sideTitle.TextColor3 = Color3.fromRGB(220, 120, 255)
+sideTitle.TextYAlignment = Enum.TextYAlignment.Center
+
+-- Sidebar Tabs
+local tabNames = {"Teleport", "Auto Lock", "Extra"}
+local tabButtons, contentFrames = {}, {}
+
+for i, tabName in ipairs(tabNames) do
+    local tabBtn = Instance.new("TextButton")
+    tabBtn.Name = "Tab"..i
+    tabBtn.Text = tabName
+    tabBtn.Size = UDim2.new(1, -16, 0, 48)
+    tabBtn.Position = UDim2.new(0, 8, 0, 74 + (i-1)*57)
+    tabBtn.BackgroundColor3 = (i==1) and Color3.fromRGB(220,120,255) or Color3.fromRGB(40, 40, 55)
+    tabBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    tabBtn.Font = Enum.Font.GothamBold
+    tabBtn.TextSize = 18
+    tabBtn.AutoButtonColor = true
+    tabBtn.Parent = sidebar
+    Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 11)
+    tabButtons[i] = tabBtn
+end
+
+-- MainFrame (ADK main window area)
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 370, 0, 430)
+mainFrame.Position = UDim2.new(0.5, -170, 0.5, -215)
+mainFrame.BackgroundColor3 = Color3.fromRGB(44, 40, 52)
+mainFrame.BorderSizePixel = 0
+mainFrame.BackgroundTransparency = 0.10
+mainFrame.Active = true
+mainFrame.Parent = gui
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 22)
+local mainStroke = Instance.new("UIStroke", mainFrame)
+mainStroke.Thickness = 3
+mainStroke.Color = Color3.fromRGB(220, 120, 255)
+
+-- Drag both sidebar and main frame together
+do
+    local UserInputService = game:GetService("UserInputService")
+    local dragging, dragInput, dragStart, sidebarStartPos, mainStartPos
+    sidebar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            sidebarStartPos = sidebar.Position
+            mainStartPos = mainFrame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+        if dragging and input == dragInput then
+            local delta = input.Position - dragStart
+            sidebar.Position = UDim2.new(
+                sidebarStartPos.X.Scale, sidebarStartPos.X.Offset + delta.X,
+                sidebarStartPos.Y.Scale, sidebarStartPos.Y.Offset + delta.Y
+            )
+            mainFrame.Position = UDim2.new(
+                mainStartPos.X.Scale, mainStartPos.X.Offset + delta.X,
+                mainStartPos.Y.Scale, mainStartPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+end
+
+-- Content Frames (ADK style)
+for i, tabName in ipairs(tabNames) do
+    local content = Instance.new("Frame", mainFrame)
+    content.Name = "Content"..i
+    content.Size = UDim2.new(1, 0, 1, 0)
+    content.Position = UDim2.new(0, 0, 0, 0)
+    content.BackgroundTransparency = 1
+    content.Visible = (i==1)
+    contentFrames[i] = content
+end
+
+-- Tab switching logic (sidebar)
+local function setTab(idx)
+    for i=1,#contentFrames do
+        contentFrames[i].Visible = (i == idx)
+        tabButtons[i].BackgroundColor3 = (i == idx) and Color3.fromRGB(220,120,255) or Color3.fromRGB(40, 40, 55)
+        tabButtons[i].TextColor3 = Color3.fromRGB(255,255,255)
+    end
+end
+for i, btn in ipairs(tabButtons) do
+    btn.MouseButton1Click:Connect(function() setTab(i) end)
+end
+
+-- Teleport Tab
+do
+    local content = contentFrames[1]
+    local savedPosition = nil
+
+    local title = Instance.new("TextLabel", content)
+    title.Size = UDim2.new(1, -20, 0, 36)
+    title.Position = UDim2.new(0, 10, 0, 10)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBlack
+    title.Text = "Teleport"
+    title.TextSize = 22
+    title.TextColor3 = Color3.fromRGB(220,120,255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local saveBtn = Instance.new("TextButton", content)
+    saveBtn.Size = UDim2.new(0, 150, 0, 44)
+    saveBtn.Position = UDim2.new(0, 25, 0, 70)
+    saveBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    saveBtn.TextColor3 = Color3.fromRGB(60,30,80)
+    saveBtn.Font = Enum.Font.GothamBold
+    saveBtn.TextSize = 19
+    saveBtn.Text = "💾 Save Position"
+    Instance.new("UICorner", saveBtn).CornerRadius = UDim.new(0, 12)
+
+    local teleportBtn = Instance.new("TextButton", content)
+    teleportBtn.Size = UDim2.new(0, 180, 0, 44)
+    teleportBtn.Position = UDim2.new(0, 25, 0, 130)
+    teleportBtn.BackgroundColor3 = Color3.fromRGB(220,120,255)
+    teleportBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    teleportBtn.Font = Enum.Font.GothamBold
+    teleportBtn.TextSize = 19
+    teleportBtn.Text = "🚀 Teleport (spam it)"
+    Instance.new("UICorner", teleportBtn).CornerRadius = UDim.new(0, 12)
+
+    saveBtn.MouseButton1Click:Connect(function()
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            savedPosition = character.HumanoidRootPart.Position
+            saveBtn.Text = "✅ Saved!"
+            wait(1)
+            saveBtn.Text = "💾 Save Position"
+        end
+    end)
+
+    teleportBtn.MouseButton1Click:Connect(function()
+        if not savedPosition then
+            teleportBtn.Text = "Save first!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+            return
+        end
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(savedPosition)
+            teleportBtn.Text = "Teleported!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+        end
+    end)
+end
+
+-- Auto Lock Tab
+do
+    local content = contentFrames[2]
+    local savedPosition = nil
+
+    local title = Instance.new("TextLabel", content)
+    title.Size = UDim2.new(1, -20, 0, 36)
+    title.Position = UDim2.new(0, 10, 0, 10)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBlack
+    title.Text = "Auto Lock"
+    title.TextSize = 22
+    title.TextColor3 = Color3.fromRGB(220,120,255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local saveBtn = Instance.new("TextButton", content)
+    saveBtn.Size = UDim2.new(0, 150, 0, 44)
+    saveBtn.Position = UDim2.new(0, 25, 0, 70)
+    saveBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    saveBtn.TextColor3 = Color3.fromRGB(60,30,80)
+    saveBtn.Font = Enum.Font.GothamBold
+    saveBtn.TextSize = 19
+    saveBtn.Text = "💾 Save Position"
+    Instance.new("UICorner", saveBtn).CornerRadius = UDim.new(0, 12)
+
+    local teleportBtn = Instance.new("TextButton", content)
+    teleportBtn.Size = UDim2.new(0, 180, 0, 44)
+    teleportBtn.Position = UDim2.new(0, 25, 0, 130)
+    teleportBtn.BackgroundColor3 = Color3.fromRGB(220,120,255)
+    teleportBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    teleportBtn.Font = Enum.Font.GothamBold
+    teleportBtn.TextSize = 19
+    teleportBtn.Text = "🚀 Teleport (spam it)"
+    Instance.new("UICorner", teleportBtn).CornerRadius = UDim.new(0, 12)
+
+    saveBtn.MouseButton1Click:Connect(function()
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            savedPosition = character.HumanoidRootPart.Position
+            saveBtn.Text = "✅ Saved!"
+            wait(1)
+            saveBtn.Text = "💾 Save Position"
+        end
+    end)
+
+    teleportBtn.MouseButton1Click:Connect(function()
+        if not savedPosition then
+            teleportBtn.Text = "Save first!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+            return
+        end
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(savedPosition)
+            teleportBtn.Text = "Teleported!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+        end
+    end)
+end
+
+-- Extra Tab (Fly, Inf Jump, Features, Credits) -- NO DANCES
+do
+    local content = contentFrames[3]
+
+    local title = Instance.new("TextLabel", content)
+    title.Size = UDim2.new(1, -20, 0, 36)
+    title.Position = UDim2.new(0, 10, 0, 10)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBlack
+    title.Text = "Extras"
+    title.TextSize = 22
+    title.TextColor3 = Color3.fromRGB(220,120,255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Fly Button
+    local flyBtn = Instance.new("TextButton", content)
+    flyBtn.Size = UDim2.new(0, 120, 0, 38)
+    flyBtn.Position = UDim2.new(0, 28, 0, 60)
+    flyBtn.BackgroundColor3 = Color3.fromRGB(220,120,255)
+    flyBtn.Text = "Enable Fly"
+    flyBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    flyBtn.Font = Enum.Font.GothamBold
+    flyBtn.TextSize = 18
+    Instance.new("UICorner", flyBtn).CornerRadius = UDim.new(0, 10)
+
+    flyBtn.MouseButton1Click:Connect(function()
+        flyBtn.Text = "Loading..."
+        flyBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-fly-v3-44404"))()
+        end)
+        flyBtn.Text = success and "Enable Fly" or "Fly Failed!"
+        flyBtn.BackgroundColor3 = Color3.fromRGB(220,120,255)
+        if not success then wait(1.5) end
+    end)
+
+    -- Inf Jump Button
+    local infJumpBtn = Instance.new("TextButton", content)
+    infJumpBtn.Size = UDim2.new(0, 130, 0, 38)
+    infJumpBtn.Position = UDim2.new(0, 32, 0, 110)
+    infJumpBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+    infJumpBtn.TextColor3 = Color3.fromRGB(44,40,52)
+    infJumpBtn.Font = Enum.Font.GothamBold
+    infJumpBtn.TextSize = 18
+    infJumpBtn.Text = "Enable Inf Jump"
+    Instance.new("UICorner", infJumpBtn).CornerRadius = UDim.new(0,10)
+
+    local infJumpEnabled = false
+    local infJumpConn
+
+    infJumpBtn.MouseButton1Click:Connect(function()
+        infJumpEnabled = not infJumpEnabled
+        if infJumpEnabled then
+            infJumpBtn.Text = "Inf Jump: ON"
+            infJumpBtn.BackgroundColor3 = Color3.fromRGB(220,255,120)
+            infJumpConn = game:GetService("UserInputService").JumpRequest:Connect(function()
+                if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+                    LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+                end
+            end)
+        else
+            infJumpBtn.Text = "Enable Inf Jump"
+            infJumpBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+            if infJumpConn then
+                infJumpConn:Disconnect()
+            end
+        end
+    end)
+
+    -- Type Features Box (script features)
+    local featuresLabel = Instance.new("TextLabel", content)
+    featuresLabel.Size = UDim2.new(1, -40, 0, 120)
+    featuresLabel.Position = UDim2.new(0, 20, 0, 160)
+    featuresLabel.BackgroundColor3 = Color3.fromRGB(36, 40, 55)
+    featuresLabel.TextColor3 = Color3.fromRGB(220,120,255)
+    featuresLabel.Font = Enum.Font.Gotham
+    featuresLabel.TextSize = 17
+    featuresLabel.Text =
+        "Script Features:\n" ..
+        "- Teleport: Save and teleport to any position\n" ..
+        "- Auto Lock: Save and teleport (same as Teleport tab, for other uses)\n" ..
+        "- Fly: Universal, loads external script\n" ..
+        "- Inf Jump: Jump infinitely\n" ..
+        "- Modern draggable animated GUI\n" ..
+        "- ADK-style glassy menu\n" ..
+        "- Credits at the bottom!"
+    featuresLabel.TextWrapped = true
+    featuresLabel.TextYAlignment = Enum.TextYAlignment.Top
+    featuresLabel.TextXAlignment = Enum.TextXAlignment.Left
+    featuresLabel.BackgroundTransparency = 0.1
+    Instance.new("UICorner", featuresLabel).CornerRadius = UDim.new(0,10)
+
+    -- Footer credits
+    local credits = Instance.new("TextLabel", mainFrame)
+    credits.Size = UDim2.new(1, 0, 0, 36)
+    credits.Position = UDim2.new(0, 0, 1, -36)
+    credits.BackgroundTransparency = 1
+    credits.Text = "made by CRAZY   |   thx for joining discord"
+    credits.TextColor3 = Color3.fromRGB(220, 120, 255)
+    credits.TextSize = 17
+    credits.Font = Enum.Font.GothamBold
+    credits.TextXAlignment = Enum.TextXAlignment.Center
+end
+	else
+		input.Text = ""
+		input.PlaceholderText = "Invalid Key!"
+	end
+end)
