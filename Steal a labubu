@@ -1,6 +1,539 @@
-local keyRequired="CRAZY LABUBU";local CoreGui=game:GetService("CoreGui");local player=game.Players.LocalPlayer;local playerGui=player:WaitForChild("PlayerGui");local keyScreen=Instance.new("ScreenGui");keyScreen.Name="HOKALAZA_KeyUI";keyScreen.IgnoreGuiInset=true;keyScreen.ResetOnSpawn=false;keyScreen.Parent=CoreGui;keyScreen.ZIndexBehavior=Enum.ZIndexBehavior.Global;local keyFrame=Instance.new("Frame");keyFrame.Size=UDim2.new(0,370,0,220);keyFrame.Position=UDim2.new(0.5, -185,0.5, -110);keyFrame.BackgroundColor3=Color3.fromRGB(28,29,34);keyFrame.BackgroundTransparency=0.04;keyFrame.Parent=keyScreen;keyFrame.Active=true;Instance.new("UICorner",keyFrame).CornerRadius=UDim.new(0,16);local stroke=Instance.new("UIStroke",keyFrame);stroke.Thickness=3;stroke.Color=Color3.fromRGB(80,180,255);local gradient=Instance.new("UIGradient",keyFrame);gradient.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(80,180,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(120,220,255))});gradient.Rotation=45;gradient.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,0.09),NumberSequenceKeypoint.new(1,0.18)});local title=Instance.new("TextLabel",keyFrame);title.Size=UDim2.new(1,0,0,48);title.Position=UDim2.new(0,0,0,8);title.BackgroundTransparency=1;title.Font=Enum.Font.GothamBlack;title.Text="HOKALAZA KEY SYSTEM";title.TextSize=28;title.TextColor3=Color3.fromRGB(110,255,255);title.TextStrokeTransparency=0.7;title.TextXAlignment=Enum.TextXAlignment.Center;local desc=Instance.new("TextLabel",keyFrame);desc.Size=UDim2.new(1, -32,0,30);desc.Position=UDim2.new(0,16,0,58);desc.BackgroundTransparency=1;desc.Text="Enter your key below to unlock HOKALAZA UI";desc.Font=Enum.Font.Gotham;desc.TextSize=16;desc.TextColor3=Color3.fromRGB(160,200,255);desc.TextWrapped=true;desc.TextYAlignment=Enum.TextYAlignment.Top;desc.TextXAlignment=Enum.TextXAlignment.Center;local box=Instance.new("TextBox",keyFrame);box.Size=UDim2.new(0,210,0,42);box.Position=UDim2.new(0.5, -105,0,98);box.BackgroundColor3=Color3.fromRGB(44,40,52);box.TextColor3=Color3.fromRGB(80,180,255);box.Text="";box.PlaceholderText="Enter Key";box.Font=Enum.Font.GothamBold;box.TextSize=20;box.TextStrokeTransparency=0.8;box.ClearTextOnFocus=false;box.TextXAlignment=Enum.TextXAlignment.Center;Instance.new("UICorner",box).CornerRadius=UDim.new(0,10);local unlockBtn=Instance.new("TextButton",keyFrame);unlockBtn.Size=UDim2.new(0,150,0,40);unlockBtn.Position=UDim2.new(0.5, -75,0,154);unlockBtn.BackgroundColor3=Color3.fromRGB(80,180,255);unlockBtn.Text="Unlock";unlockBtn.TextColor3=Color3.fromRGB(28,29,34);unlockBtn.Font=Enum.Font.GothamBold;unlockBtn.TextSize=20;Instance.new("UICorner",unlockBtn).CornerRadius=UDim.new(0,10);local discordBtn=Instance.new("TextButton",keyFrame);discordBtn.Size=UDim2.new(0,180,0,28);discordBtn.Position=UDim2.new(0.5, -90,1, -34);discordBtn.AnchorPoint=Vector2.new(0,1);discordBtn.BackgroundColor3=Color3.fromRGB(120,220,255);discordBtn.Text="Get Key (Copy Discord)";discordBtn.TextColor3=Color3.fromRGB(44,40,52);discordBtn.Font=Enum.Font.GothamBold;discordBtn.TextSize=15;Instance.new("UICorner",discordBtn).CornerRadius=UDim.new(0,8);discordBtn.AutoButtonColor=true;discordBtn.MouseButton1Click:Connect(function() setclipboard("https://discord.gg/X76mn4ArY7");discordBtn.Text="Copied!";wait(1);discordBtn.Text="Get Key (Copy Discord)";end);do local UserInputService=game:GetService("UserInputService");local dragging,dragInput,dragStart,startPos;keyFrame.InputBegan:Connect(function(input) if ((input.UserInputType==Enum.UserInputType.MouseButton1) or (input.UserInputType==Enum.UserInputType.Touch)) then dragging=true;dragStart=input.Position;startPos=keyFrame.Position;input.Changed:Connect(function() if (input.UserInputState==Enum.UserInputState.End) then dragging=false;end end);end end);UserInputService.InputChanged:Connect(function(input) if ((input.UserInputType==Enum.UserInputType.MouseMovement) or (input.UserInputType==Enum.UserInputType.Touch)) then dragInput=input;end if (dragging and (input==dragInput)) then local delta=input.Position-dragStart ;keyFrame.Position=UDim2.new(startPos.X.Scale,startPos.X.Offset + delta.X ,startPos.Y.Scale,startPos.Y.Offset + delta.Y );end end);end box:GetPropertyChangedSignal("Text"):Connect(function() if ( #box.Text>32) then box.Text=box.Text:sub(1,32);end end);local unlocked=false;local function tryUnlock() if (box.Text==keyRequired) then unlockBtn.Text="Unlocked!";unlockBtn.BackgroundColor3=Color3.fromRGB(120,255,120);wait(0.5);unlocked=true;keyScreen:Destroy();else unlockBtn.Text="Wrong Key!";unlockBtn.BackgroundColor3=Color3.fromRGB(255,80,80);wait(1);unlockBtn.Text="Unlock";unlockBtn.BackgroundColor3=Color3.fromRGB(80,180,255);box.Text="";end end unlockBtn.MouseButton1Click:Connect(tryUnlock);box.FocusLost:Connect(function(enter) if enter then tryUnlock();end end);task.defer(function() box:CaptureFocus();end);while  not unlocked do task.wait();end for _,guiName in ipairs({"StealBrainrotModdedUI","MyTeleportGui","AutoLock","NoclipToggle"}) do local oldGui=playerGui:FindFirstChild(guiName);if oldGui then oldGui:Destroy();end end local TweenService=game:GetService("TweenService");local gui=Instance.new("ScreenGui");gui.Name="StealBrainrotModdedUI";gui.ResetOnSpawn=false;gui.Parent=playerGui;local mainFrame=Instance.new("Frame");mainFrame.Size=UDim2.new(0,480,0,420);mainFrame.Position=UDim2.new(0.5, -240,0.5, -210);mainFrame.BackgroundColor3=Color3.fromRGB(28,29,34);mainFrame.BorderSizePixel=0;mainFrame.Active=true;mainFrame.Parent=gui;Instance.new("UICorner",mainFrame).CornerRadius=UDim.new(0,18);local mainStroke=Instance.new("UIStroke",mainFrame);mainStroke.Thickness=3;mainStroke.Color=Color3.fromRGB(80,180,255);mainStroke.ApplyStrokeMode=Enum.ApplyStrokeMode.Border;spawn(function() while mainFrame and mainFrame.Parent  do local newColor=Color3.fromHSV((tick()/2.5)%1 ,0.5,1);local tween=TweenService:Create(mainStroke,TweenInfo.new(0.8,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Color=newColor});tween:Play();tween.Completed:Wait();wait(0.1);end end);local bigTitle=Instance.new("TextLabel",mainFrame);bigTitle.Size=UDim2.new(1,0,0,40);bigTitle.Position=UDim2.new(0,0,0,0);bigTitle.BackgroundTransparency=1;bigTitle.Font=Enum.Font.GothamBlack;bigTitle.Text="HOKALAZA";bigTitle.TextSize=32;bigTitle.TextColor3=Color3.fromRGB(110,255,255);bigTitle.TextXAlignment=Enum.TextXAlignment.Center;local tabBar=Instance.new("Frame",mainFrame);tabBar.Size=UDim2.new(1,0,0,44);tabBar.Position=UDim2.new(0,0,0,40);tabBar.BackgroundColor3=Color3.fromRGB(26,28,36);tabBar.BorderSizePixel=0;local tabNames={"Teleport","Auto Lock","Extra"};local tabButtons,contentFrames={},{};for i,tabName in ipairs(tabNames) do local tabBtn=Instance.new("TextButton",tabBar);tabBtn.Name="Tab"   .. i ;tabBtn.Text=tabName;tabBtn.Size=UDim2.new(0,160,1,0);tabBtn.Position=UDim2.new(0,(i-1) * 160 ,0,0);tabBtn.BackgroundColor3=((i==1) and Color3.fromRGB(80,180,255)) or Color3.fromRGB(35,36,47) ;tabBtn.TextColor3=Color3.fromRGB(255,255,255);tabBtn.Font=Enum.Font.GothamBold;tabBtn.TextSize=18;tabBtn.AutoButtonColor=true;Instance.new("UICorner",tabBtn).CornerRadius=UDim.new(0,10);tabButtons[i]=tabBtn;local content=Instance.new("Frame",mainFrame);content.Name="Content"   .. i ;content.Size=UDim2.new(1,0,1, -124);content.Position=UDim2.new(0,0,0,84);content.BackgroundTransparency=1;content.Visible=i==1 ;contentFrames[i]=content;end do local UserInputService=game:GetService("UserInputService");local dragging,dragInput,dragStart,startPos;mainFrame.InputBegan:Connect(function(input) if ((input.UserInputType==Enum.UserInputType.MouseButton1) or (input.UserInputType==Enum.UserInputType.Touch)) then dragging=true;dragStart=input.Position;startPos=mainFrame.Position;input.Changed:Connect(function() if (input.UserInputState==Enum.UserInputState.End) then dragging=false;end end);end end);UserInputService.InputChanged:Connect(function(input) if ((input.UserInputType==Enum.UserInputType.MouseMovement) or (input.UserInputType==Enum.UserInputType.Touch)) then dragInput=input;end if (dragging and (input==dragInput)) then local delta=input.Position-dragStart ;mainFrame.Position=UDim2.new(startPos.X.Scale,startPos.X.Offset + delta.X ,startPos.Y.Scale,startPos.Y.Offset + delta.Y );end end);end local function setTab(idx) for i=1, #contentFrames do contentFrames[i].Visible=i==idx ;tabButtons[i].BackgroundColor3=((i==idx) and Color3.fromRGB(80,180,255)) or Color3.fromRGB(35,36,47) ;tabButtons[i].TextColor3=Color3.fromRGB(255,255,255);end end for i,btn in ipairs(tabButtons) do btn.MouseButton1Click:Connect(function() setTab(i);end);end do local content=contentFrames[1];local savedPosition=nil;local title=Instance.new("TextLabel",content);title.Size=UDim2.new(1, -20,0,36);title.Position=UDim2.new(0,10,0,10);title.BackgroundTransparency=1;title.Font=Enum.Font.GothamBlack;title.Text="Teleport";title.TextSize=24;title.TextColor3=Color3.fromRGB(200,240,255);title.TextXAlignment=Enum.TextXAlignment.Left;local saveBtn=Instance.new("TextButton",content);saveBtn.Size=UDim2.new(0,170,0,44);saveBtn.Position=UDim2.new(0,25,0,70);saveBtn.BackgroundColor3=Color3.fromRGB(255,255,255);saveBtn.TextColor3=Color3.fromRGB(30,30,30);saveBtn.Font=Enum.Font.GothamBold;saveBtn.TextSize=19;saveBtn.Text="💾 Save Position";Instance.new("UICorner",saveBtn).CornerRadius=UDim.new(0,12);local teleportBtn=Instance.new("TextButton",content);teleportBtn.Size=UDim2.new(0,210,0,44);teleportBtn.Position=UDim2.new(0,25,0,130);teleportBtn.BackgroundColor3=Color3.fromRGB(0,162,255);teleportBtn.TextColor3=Color3.fromRGB(255,255,255);teleportBtn.Font=Enum.Font.GothamBold;teleportBtn.TextSize=19;teleportBtn.Text="🚀 Teleport (spam it)";Instance.new("UICorner",teleportBtn).CornerRadius=UDim.new(0,12);saveBtn.MouseButton1Click:Connect(function() local character=player.Character;if (character and character:FindFirstChild("HumanoidRootPart")) then savedPosition=character.HumanoidRootPart.Position;saveBtn.Text="✅ Saved!";wait(1);saveBtn.Text="💾 Save Position";end end);teleportBtn.MouseButton1Click:Connect(function() if  not savedPosition then teleportBtn.Text="Save first!";wait(1);teleportBtn.Text="🚀 Teleport (spam it)";return;end local character=player.Character;if (character and character:FindFirstChild("HumanoidRootPart")) then character.HumanoidRootPart.CFrame=CFrame.new(savedPosition);teleportBtn.Text="Teleported!";wait(1);teleportBtn.Text="🚀 Teleport (spam it)";end end);end do local content=contentFrames[2];local savedPosition=nil;local title=Instance.new("TextLabel",content);title.Size=UDim2.new(1, -20,0,36);title.Position=UDim2.new(0,10,0,10);title.BackgroundTransparency=1;title.Font=Enum.Font.GothamBlack;title.Text="Auto Lock";title.TextSize=24;title.TextColor3=Color3.fromRGB(220,220,255);title.TextXAlignment=Enum.TextXAlignment.Left;local saveBtn=Instance.new("TextButton",content);saveBtn.Size=UDim2.new(0,170,0,44);saveBtn.Position=UDim2.new(0,25,0,70);saveBtn.BackgroundColor3=Color3.fromRGB(255,255,255);saveBtn.TextColor3=Color3.fromRGB(30,30,30);saveBtn.Font=Enum.Font.GothamBold;saveBtn.TextSize=19;saveBtn.Text="💾 Save Position";Instance.new("UICorner",saveBtn).CornerRadius=UDim.new(0,12);local teleportBtn=Instance.new("TextButton",content);teleportBtn.Size=UDim2.new(0,210,0,44);teleportBtn.Position=UDim2.new(0,25,0,130);teleportBtn.BackgroundColor3=Color3.fromRGB(0,162,255);teleportBtn.TextColor3=Color3.fromRGB(255,255,255);teleportBtn.Font=Enum.Font.GothamBold;teleportBtn.TextSize=19;teleportBtn.Text="🚀 Teleport (spam it)";Instance.new("UICorner",teleportBtn).CornerRadius=UDim.new(0,12);saveBtn.MouseButton1Click:Connect(function() local character=player.Character;if (character and character:FindFirstChild("HumanoidRootPart")) then savedPosition=character.HumanoidRootPart.Position;saveBtn.Text="✅ Saved!";wait(1);saveBtn.Text="💾 Save Position";end end);teleportBtn.MouseButton1Click:Connect(function() if  not savedPosition then teleportBtn.Text="Save first!";wait(1);teleportBtn.Text="🚀 Teleport (spam it)";return;end local character=player.Character;if (character and character:FindFirstChild("HumanoidRootPart")) then character.HumanoidRootPart.CFrame=CFrame.new(savedPosition);teleportBtn.Text="Teleported!";wait(1);teleportBtn.Text="🚀 Teleport (spam it)";end end);end do local content=contentFrames[3];local noclipBtn=Instance.new("TextButton",content);noclipBtn.Size=UDim2.new(0,190,0,44);noclipBtn.Position=UDim2.new(0,30,0,60);noclipBtn.BackgroundColor3=Color3.fromRGB(100,200,160);noclipBtn.TextColor3=Color3.fromRGB(30,30,30);noclipBtn.Font=Enum.Font.GothamBold;noclipBtn.TextSize=20;noclipBtn.Text="Noclip";Instance.new("UICorner",noclipBtn).CornerRadius=UDim.new(0,13);local noclipActive=false;local noclipConn;noclipBtn.MouseButton1Click:Connect(function() noclipActive= not noclipActive;if noclipActive then noclipBtn.Text="Noclip ON";noclipBtn.BackgroundColor3=Color3.fromRGB(40,220,120);noclipConn=game:GetService("RunService").Stepped:Connect(function() local char=player.Character;if char then for _,v in pairs(char:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide=false;end end end end);else noclipBtn.Text="Noclip";noclipBtn.BackgroundColor3=Color3.fromRGB(100,200,160);if noclipConn then noclipConn:Disconnect();noclipConn=nil;end local char=player.Character;if char then for _,v in pairs(char:GetDescendants()) do if (v:IsA("BasePart") and (v.Name~="HumanoidRootPart")) then v.CanCollide=true;end end end end end);local infJumpBtn=Instance.new("TextButton",content);infJumpBtn.Size=UDim2.new(0,190,0,44);infJumpBtn.Position=UDim2.new(0,240,0,60);infJumpBtn.BackgroundColor3=Color3.fromRGB(120,220,255);infJumpBtn.TextColor3=Color3.fromRGB(44,40,52);infJumpBtn.Font=Enum.Font.GothamBold;infJumpBtn.TextSize=20;infJumpBtn.Text="Inf Jump";Instance.new("UICorner",infJumpBtn).CornerRadius=UDim.new(0,13);local infJumpActive=false;local infJumpConn;infJumpBtn.MouseButton1Click:Connect(function() infJumpActive= not infJumpActive;if infJumpActive then infJumpBtn.Text="Inf Jump ON";infJumpBtn.BackgroundColor3=Color3.fromRGB(220,255,120);infJumpConn=game:GetService("UserInputService").JumpRequest:Connect(function() local char=player.Character;if (char and char:FindFirstChildOfClass("Humanoid")) then char:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping);end end);else infJumpBtn.Text="Inf Jump";infJumpBtn.BackgroundColor3=Color3.fromRGB(120,220,255);if infJumpConn then infJumpConn:Disconnect();infJumpConn=nil;end end end);local featuresLabel=Instance.new("TextLabel",content);featuresLabel.Size=UDim2.new(1, -40,0,88);featuresLabel.Position=UDim2.new(0,20,0,120);featuresLabel.BackgroundColor3=Color3.fromRGB(36,40,55);featuresLabel.TextColor3=Color3.fromRGB(200,240,255);featuresLabel.Font=Enum.Font.Gotham;featuresLabel.TextSize=18;featuresLabel.Text="features; 
+--[[
+    HOKALAZA UI - Type Features Only (With Key System)
+    - Tabs: Teleport, Auto Lock, Extra (Noclip, Inf Jump, "Type Features")
+    - Key System: "CRAZY LABUBU"
+    - Footer credits: "made by CRAZY" and "thx for joining discord"
+    - Clean, draggable, animated, mobile/iPad/PC compatible
+]]
+
+local keyRequired = "CRAZY LABUBU"
+
+-- Key UI
+local CoreGui = game:GetService("CoreGui")
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local keyScreen = Instance.new("ScreenGui")
+keyScreen.Name = "HOKALAZA_KeyUI"
+keyScreen.IgnoreGuiInset = true
+keyScreen.ResetOnSpawn = false
+keyScreen.Parent = CoreGui
+keyScreen.ZIndexBehavior = Enum.ZIndexBehavior.Global
+
+local keyFrame = Instance.new("Frame")
+keyFrame.Size = UDim2.new(0, 370, 0, 220)
+keyFrame.Position = UDim2.new(0.5, -185, 0.5, -110)
+keyFrame.BackgroundColor3 = Color3.fromRGB(28, 29, 34)
+keyFrame.BackgroundTransparency = 0.04
+keyFrame.Parent = keyScreen
+keyFrame.Active = true
+
+Instance.new("UICorner", keyFrame).CornerRadius = UDim.new(0, 16)
+local stroke = Instance.new("UIStroke", keyFrame)
+stroke.Thickness = 3
+stroke.Color = Color3.fromRGB(80, 180, 255)
+
+local gradient = Instance.new("UIGradient", keyFrame)
+gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80,180,255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(120,220,255))
+}
+gradient.Rotation = 45
+gradient.Transparency = NumberSequence.new{
+    NumberSequenceKeypoint.new(0, 0.09),
+    NumberSequenceKeypoint.new(1, 0.18)
+}
+
+local title = Instance.new("TextLabel", keyFrame)
+title.Size = UDim2.new(1, 0, 0, 48)
+title.Position = UDim2.new(0, 0, 0, 8)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.GothamBlack
+title.Text = "HOKALAZA KEY SYSTEM"
+title.TextSize = 28
+title.TextColor3 = Color3.fromRGB(110, 255, 255)
+title.TextStrokeTransparency = 0.7
+title.TextXAlignment = Enum.TextXAlignment.Center
+
+local desc = Instance.new("TextLabel", keyFrame)
+desc.Size = UDim2.new(1, -32, 0, 30)
+desc.Position = UDim2.new(0, 16, 0, 58)
+desc.BackgroundTransparency = 1
+desc.Text = "Enter your key below to unlock HOKALAZA UI"
+desc.Font = Enum.Font.Gotham
+desc.TextSize = 16
+desc.TextColor3 = Color3.fromRGB(160, 200, 255)
+desc.TextWrapped = true
+desc.TextYAlignment = Enum.TextYAlignment.Top
+desc.TextXAlignment = Enum.TextXAlignment.Center
+
+local box = Instance.new("TextBox", keyFrame)
+box.Size = UDim2.new(0, 210, 0, 42)
+box.Position = UDim2.new(0.5, -105, 0, 98)
+box.BackgroundColor3 = Color3.fromRGB(44, 40, 52)
+box.TextColor3 = Color3.fromRGB(80,180,255)
+box.Text = ""
+box.PlaceholderText = "Enter Key"
+box.Font = Enum.Font.GothamBold
+box.TextSize = 20
+box.TextStrokeTransparency = 0.8
+box.ClearTextOnFocus = false
+box.TextXAlignment = Enum.TextXAlignment.Center
+Instance.new("UICorner", box).CornerRadius = UDim.new(0, 10)
+
+local unlockBtn = Instance.new("TextButton", keyFrame)
+unlockBtn.Size = UDim2.new(0, 150, 0, 40)
+unlockBtn.Position = UDim2.new(0.5, -75, 0, 154)
+unlockBtn.BackgroundColor3 = Color3.fromRGB(80,180,255)
+unlockBtn.Text = "Unlock"
+unlockBtn.TextColor3 = Color3.fromRGB(28,29,34)
+unlockBtn.Font = Enum.Font.GothamBold
+unlockBtn.TextSize = 20
+Instance.new("UICorner", unlockBtn).CornerRadius = UDim.new(0, 10)
+
+local discordBtn = Instance.new("TextButton", keyFrame)
+discordBtn.Size = UDim2.new(0, 180, 0, 28)
+discordBtn.Position = UDim2.new(0.5, -90, 1, -34)
+discordBtn.AnchorPoint = Vector2.new(0, 1)
+discordBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+discordBtn.Text = "Get Key (Copy Discord)"
+discordBtn.TextColor3 = Color3.fromRGB(44,40,52)
+discordBtn.Font = Enum.Font.GothamBold
+discordBtn.TextSize = 15
+Instance.new("UICorner", discordBtn).CornerRadius = UDim.new(0, 8)
+discordBtn.AutoButtonColor = true
+
+discordBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/X76mn4ArY7")
+    discordBtn.Text = "Copied!"
+    wait(1)
+    discordBtn.Text = "Get Key (Copy Discord)"
+end)
+
+-- Draggable Key UI
+do
+    local UserInputService = game:GetService("UserInputService")
+    local dragging, dragInput, dragStart, startPos
+    keyFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = keyFrame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+        if dragging and input == dragInput then
+            local delta = input.Position - dragStart
+            keyFrame.Position = UDim2.new(
+                startPos.X.Scale, startPos.X.Offset + delta.X,
+                startPos.Y.Scale, startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+end
+
+box:GetPropertyChangedSignal("Text"):Connect(function()
+    if #box.Text > 32 then box.Text = box.Text:sub(1, 32) end
+end)
+
+local unlocked = false
+local function tryUnlock()
+    if box.Text == keyRequired then
+        unlockBtn.Text = "Unlocked!"
+        unlockBtn.BackgroundColor3 = Color3.fromRGB(120,255,120)
+        wait(0.5)
+        unlocked = true
+        keyScreen:Destroy()
+    else
+        unlockBtn.Text = "Wrong Key!"
+        unlockBtn.BackgroundColor3 = Color3.fromRGB(255,80,80)
+        wait(1)
+        unlockBtn.Text = "Unlock"
+        unlockBtn.BackgroundColor3 = Color3.fromRGB(80,180,255)
+        box.Text = ""
+    end
+end
+unlockBtn.MouseButton1Click:Connect(tryUnlock)
+box.FocusLost:Connect(function(enter) if enter then tryUnlock() end end)
+
+-- Focus input automatically on show (mobile/PC)
+task.defer(function() box:CaptureFocus() end)
+
+while not unlocked do task.wait() end
+
+-- Remove old GUIs
+for _, guiName in ipairs({"StealBrainrotModdedUI", "MyTeleportGui", "AutoLock", "NoclipToggle"}) do
+    local oldGui = playerGui:FindFirstChild(guiName)
+    if oldGui then oldGui:Destroy() end
+end
+
+local TweenService = game:GetService("TweenService")
+
+-- Main UI
+local gui = Instance.new("ScreenGui")
+gui.Name = "StealBrainrotModdedUI"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 480, 0, 420)
+mainFrame.Position = UDim2.new(0.5, -240, 0.5, -210)
+mainFrame.BackgroundColor3 = Color3.fromRGB(28, 29, 34)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Parent = gui
+
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 18)
+local mainStroke = Instance.new("UIStroke", mainFrame)
+mainStroke.Thickness = 3
+mainStroke.Color = Color3.fromRGB(80, 180, 255)
+mainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+-- Border color animation
+spawn(function()
+	while mainFrame and mainFrame.Parent do
+		local newColor = Color3.fromHSV((tick()/2.5)%1, 0.5, 1)
+		local tween = TweenService:Create(mainStroke, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Color = newColor})
+		tween:Play()
+		tween.Completed:Wait()
+		wait(0.1)
+	end
+end)
+
+-- Big Title
+local bigTitle = Instance.new("TextLabel", mainFrame)
+bigTitle.Size = UDim2.new(1, 0, 0, 40)
+bigTitle.Position = UDim2.new(0, 0, 0, 0)
+bigTitle.BackgroundTransparency = 1
+bigTitle.Font = Enum.Font.GothamBlack
+bigTitle.Text = "HOKALAZA"
+bigTitle.TextSize = 32
+bigTitle.TextColor3 = Color3.fromRGB(110, 255, 255)
+bigTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Tab bar
+local tabBar = Instance.new("Frame", mainFrame)
+tabBar.Size = UDim2.new(1, 0, 0, 44)
+tabBar.Position = UDim2.new(0, 0, 0, 40)
+tabBar.BackgroundColor3 = Color3.fromRGB(26, 28, 36)
+tabBar.BorderSizePixel = 0
+
+local tabNames = {"Teleport", "Auto Lock", "Extra"}
+local tabButtons, contentFrames = {}, {}
+
+for i, tabName in ipairs(tabNames) do
+    -- Tab Buttons
+    local tabBtn = Instance.new("TextButton", tabBar)
+    tabBtn.Name = "Tab"..i
+    tabBtn.Text = tabName
+    tabBtn.Size = UDim2.new(0, 160, 1, 0)
+    tabBtn.Position = UDim2.new(0, (i-1)*160, 0, 0)
+    tabBtn.BackgroundColor3 = (i==1) and Color3.fromRGB(80,180,255) or Color3.fromRGB(35, 36, 47)
+    tabBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    tabBtn.Font = Enum.Font.GothamBold
+    tabBtn.TextSize = 18
+    tabBtn.AutoButtonColor = true
+    Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 10)
+    tabButtons[i] = tabBtn
+
+    -- Content Frames
+    local content = Instance.new("Frame", mainFrame)
+    content.Name = "Content"..i
+    content.Size = UDim2.new(1, 0, 1, -124)
+    content.Position = UDim2.new(0, 0, 0, 84)
+    content.BackgroundTransparency = 1
+    content.Visible = (i==1)
+    contentFrames[i] = content
+end
+
+-- Draggable logic (PC & Mobile & iPad)
+do
+	local UserInputService = game:GetService("UserInputService")
+	local dragging, dragInput, dragStart, startPos
+	mainFrame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = mainFrame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	UserInputService.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+		if dragging and input == dragInput then
+			local delta = input.Position - dragStart
+			mainFrame.Position = UDim2.new(
+				startPos.X.Scale, startPos.X.Offset + delta.X,
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y
+			)
+		end
+	end)
+end
+
+-- Tab switching logic
+local function setTab(idx)
+    for i=1,#contentFrames do
+        contentFrames[i].Visible = (i == idx)
+        tabButtons[i].BackgroundColor3 = (i == idx) and Color3.fromRGB(80,180,255) or Color3.fromRGB(35, 36, 47)
+        tabButtons[i].TextColor3 = Color3.fromRGB(255,255,255)
+    end
+end
+for i, btn in ipairs(tabButtons) do
+    btn.MouseButton1Click:Connect(function() setTab(i) end)
+end
+
+-- Teleport Tab
+do
+    local content = contentFrames[1]
+    local savedPosition = nil
+
+    local title = Instance.new("TextLabel", content)
+    title.Size = UDim2.new(1, -20, 0, 36)
+    title.Position = UDim2.new(0, 10, 0, 10)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBlack
+    title.Text = "Teleport"
+    title.TextSize = 24
+    title.TextColor3 = Color3.fromRGB(200,240,255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local saveBtn = Instance.new("TextButton", content)
+    saveBtn.Size = UDim2.new(0, 170, 0, 44)
+    saveBtn.Position = UDim2.new(0, 25, 0, 70)
+    saveBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    saveBtn.TextColor3 = Color3.fromRGB(30,30,30)
+    saveBtn.Font = Enum.Font.GothamBold
+    saveBtn.TextSize = 19
+    saveBtn.Text = "💾 Save Position"
+    Instance.new("UICorner", saveBtn).CornerRadius = UDim.new(0, 12)
+
+    local teleportBtn = Instance.new("TextButton", content)
+    teleportBtn.Size = UDim2.new(0, 210, 0, 44)
+    teleportBtn.Position = UDim2.new(0, 25, 0, 130)
+    teleportBtn.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+    teleportBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    teleportBtn.Font = Enum.Font.GothamBold
+    teleportBtn.TextSize = 19
+    teleportBtn.Text = "🚀 Teleport (spam it)"
+    Instance.new("UICorner", teleportBtn).CornerRadius = UDim.new(0, 12)
+
+    saveBtn.MouseButton1Click:Connect(function()
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            savedPosition = character.HumanoidRootPart.Position
+            saveBtn.Text = "✅ Saved!"
+            wait(1)
+            saveBtn.Text = "💾 Save Position"
+        end
+    end)
+
+    teleportBtn.MouseButton1Click:Connect(function()
+        if not savedPosition then
+            teleportBtn.Text = "Save first!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+            return
+        end
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(savedPosition)
+            teleportBtn.Text = "Teleported!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+        end
+    end)
+end
+
+-- Auto Lock Tab
+do
+    local content = contentFrames[2]
+    local savedPosition = nil
+
+    local title = Instance.new("TextLabel", content)
+    title.Size = UDim2.new(1, -20, 0, 36)
+    title.Position = UDim2.new(0, 10, 0, 10)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBlack
+    title.Text = "Auto Lock"
+    title.TextSize = 24
+    title.TextColor3 = Color3.fromRGB(220,220,255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local saveBtn = Instance.new("TextButton", content)
+    saveBtn.Size = UDim2.new(0, 170, 0, 44)
+    saveBtn.Position = UDim2.new(0, 25, 0, 70)
+    saveBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    saveBtn.TextColor3 = Color3.fromRGB(30,30,30)
+    saveBtn.Font = Enum.Font.GothamBold
+    saveBtn.TextSize = 19
+    saveBtn.Text = "💾 Save Position"
+    Instance.new("UICorner", saveBtn).CornerRadius = UDim.new(0, 12)
+
+    local teleportBtn = Instance.new("TextButton", content)
+    teleportBtn.Size = UDim2.new(0, 210, 0, 44)
+    teleportBtn.Position = UDim2.new(0, 25, 0, 130)
+    teleportBtn.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+    teleportBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    teleportBtn.Font = Enum.Font.GothamBold
+    teleportBtn.TextSize = 19
+    teleportBtn.Text = "🚀 Teleport (spam it)"
+    Instance.new("UICorner", teleportBtn).CornerRadius = UDim.new(0, 12)
+
+    saveBtn.MouseButton1Click:Connect(function()
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            savedPosition = character.HumanoidRootPart.Position
+            saveBtn.Text = "✅ Saved!"
+            wait(1)
+            saveBtn.Text = "💾 Save Position"
+        end
+    end)
+
+    teleportBtn.MouseButton1Click:Connect(function()
+        if not savedPosition then
+            teleportBtn.Text = "Save first!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+            return
+        end
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(savedPosition)
+            teleportBtn.Text = "Teleported!"
+            wait(1)
+            teleportBtn.Text = "🚀 Teleport (spam it)"
+        end
+    end)
+end
+
+-- Extra Tab (Noclip, Inf Jump, Type Features, Credits)
+do
+    local content = contentFrames[3]
+
+    -- Noclip (custom remake)
+    local noclipBtn = Instance.new("TextButton", content)
+    noclipBtn.Size = UDim2.new(0, 190, 0, 44)
+    noclipBtn.Position = UDim2.new(0, 30, 0, 60)
+    noclipBtn.BackgroundColor3 = Color3.fromRGB(100, 200, 160)
+    noclipBtn.TextColor3 = Color3.fromRGB(30,30,30)
+    noclipBtn.Font = Enum.Font.GothamBold
+    noclipBtn.TextSize = 20
+    noclipBtn.Text = "Noclip"
+    Instance.new("UICorner", noclipBtn).CornerRadius = UDim.new(0, 13)
+
+    local noclipActive = false
+    local noclipConn
+
+    noclipBtn.MouseButton1Click:Connect(function()
+        noclipActive = not noclipActive
+        if noclipActive then
+            noclipBtn.Text = "Noclip ON"
+            noclipBtn.BackgroundColor3 = Color3.fromRGB(40, 220, 120)
+            noclipConn = game:GetService("RunService").Stepped:Connect(function()
+                local char = player.Character
+                if char then
+                    for _, v in pairs(char:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            noclipBtn.Text = "Noclip"
+            noclipBtn.BackgroundColor3 = Color3.fromRGB(100, 200, 160)
+            if noclipConn then
+                noclipConn:Disconnect()
+                noclipConn = nil
+            end
+            -- Try to restore normal collision for non-root parts
+            local char = player.Character
+            if char then
+                for _, v in pairs(char:GetDescendants()) do
+                    if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+                        v.CanCollide = true
+                    end
+                end
+            end
+        end
+    end)
+
+    -- Inf Jump
+    local infJumpBtn = Instance.new("TextButton", content)
+    infJumpBtn.Size = UDim2.new(0, 190, 0, 44)
+    infJumpBtn.Position = UDim2.new(0, 240, 0, 60)
+    infJumpBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+    infJumpBtn.TextColor3 = Color3.fromRGB(44,40,52)
+    infJumpBtn.Font = Enum.Font.GothamBold
+    infJumpBtn.TextSize = 20
+    infJumpBtn.Text = "Inf Jump"
+    Instance.new("UICorner", infJumpBtn).CornerRadius = UDim.new(0, 13)
+
+    local infJumpActive = false
+    local infJumpConn
+    infJumpBtn.MouseButton1Click:Connect(function()
+        infJumpActive = not infJumpActive
+        if infJumpActive then
+            infJumpBtn.Text = "Inf Jump ON"
+            infJumpBtn.BackgroundColor3 = Color3.fromRGB(220,255,120)
+            infJumpConn = game:GetService("UserInputService").JumpRequest:Connect(function()
+                local char = player.Character
+                if char and char:FindFirstChildOfClass("Humanoid") then
+                    char:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+                end
+            end)
+        else
+            infJumpBtn.Text = "Inf Jump"
+            infJumpBtn.BackgroundColor3 = Color3.fromRGB(120,220,255)
+            if infJumpConn then
+                infJumpConn:Disconnect()
+                infJumpConn = nil
+            end
+        end
+    end)
+
+    -- Type Features Box (instructions, hotkeys, info)
+    local featuresLabel = Instance.new("TextLabel", content)
+    featuresLabel.Size = UDim2.new(1, -40, 0, 88)
+    featuresLabel.Position = UDim2.new(0, 20, 0, 120)
+    featuresLabel.BackgroundColor3 = Color3.fromRGB(36, 40, 55)
+    featuresLabel.TextColor3 = Color3.fromRGB(200, 240, 255)
+    featuresLabel.Font = Enum.Font.Gotham
+    featuresLabel.TextSize = 18
+    featuresLabel.Text = "features; 
 no clip⚜️ 
 inf jump🌙 
 auto steal🥷 
 auto lock⛓️‍💥
-Inf jump ";featuresLabel.TextWrapped=true;featuresLabel.TextYAlignment=Enum.TextYAlignment.Top;featuresLabel.TextXAlignment=Enum.TextXAlignment.Left;featuresLabel.BackgroundTransparency=0.1;Instance.new("UICorner",featuresLabel).CornerRadius=UDim.new(0,10);local credits=Instance.new("TextLabel",mainFrame);credits.Size=UDim2.new(1,0,0,36);credits.Position=UDim2.new(0,0,1, -36);credits.BackgroundTransparency=1;credits.Text="made by CRAZY   |   thx for joining discord";credits.TextColor3=Color3.fromRGB(120,200,255);credits.TextSize=17;credits.Font=Enum.Font.GothamBold;credits.TextXAlignment=Enum.TextXAlignment.Center;end end
+Inf jump "
+    featuresLabel.TextWrapped = true
+    featuresLabel.TextYAlignment = Enum.TextYAlignment.Top
+    featuresLabel.TextXAlignment = Enum.TextXAlignment.Left
+    featuresLabel.BackgroundTransparency = 0.1
+    Instance.new("UICorner", featuresLabel).CornerRadius = UDim.new(0,10)
+
+    -- Footer credits
+    local credits = Instance.new("TextLabel", mainFrame)
+    credits.Size = UDim2.new(1, 0, 0, 36)
+    credits.Position = UDim2.new(0, 0, 1, -36)
+    credits.BackgroundTransparency = 1
+    credits.Text = "made by CRAZY   |   thx for joining discord"
+    credits.TextColor3 = Color3.fromRGB(120, 200, 255)
+    credits.TextSize = 17
+    credits.Font = Enum.Font.GothamBold
+    credits.TextXAlignment = Enum.TextXAlignment.Center
+end
